@@ -333,14 +333,6 @@
         <argument type="service" id=".service_locator.5nX7ca3.App\Controller\ItemController"/>
       </call>
     </service>
-    <service id="App\Controller\ToDoListController" class="App\Controller\ToDoListController" public="true" autowire="true" autoconfigure="true">
-      <tag name="controller.service_arguments"/>
-      <tag name="container.service_subscriber"/>
-      <argument type="service" id="App\Services\ToDoListService"/>
-      <call method="setContainer">
-        <argument type="service" id=".service_locator.5nX7ca3.App\Controller\ToDoListController"/>
-      </call>
-    </service>
     <service id="App\Controller\UserController" class="App\Controller\UserController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="container.service_subscriber"/>
@@ -349,9 +341,6 @@
       </call>
     </service>
     <service id="App\Form\ItemType" class="App\Form\ItemType" autowire="true" autoconfigure="true">
-      <tag name="form.type"/>
-    </service>
-    <service id="App\Form\ToDoListType" class="App\Form\ToDoListType" autowire="true" autoconfigure="true">
       <tag name="form.type"/>
     </service>
     <service id="App\Form\UserType" class="App\Form\UserType" autowire="true" autoconfigure="true">
@@ -369,7 +358,9 @@
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
     </service>
-    <service id="App\Services\ToDoListService" class="App\Services\ToDoListService" autowire="true" autoconfigure="true"/>
+    <service id="App\Services\ToDoListService" class="App\Services\ToDoListService" autowire="true" autoconfigure="true">
+      <argument type="service" id="doctrine.orm.default_entity_manager"/>
+    </service>
     <service id="argument_metadata_factory" class="Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadataFactory"/>
     <service id="response_listener" class="Symfony\Component\HttpKernel\EventListener\ResponseListener">
       <tag name="kernel.event_subscriber"/>
@@ -838,7 +829,6 @@
       </argument>
       <argument type="collection">
         <argument>App\Form\ItemType</argument>
-        <argument>App\Form\ToDoListType</argument>
         <argument>App\Form\UserType</argument>
         <argument>Symfony\Component\Form\Extension\Core\Type\FormType</argument>
         <argument>Symfony\Component\Form\Extension\Core\Type\ChoiceType</argument>
@@ -1197,7 +1187,7 @@
       <argument type="service" id="form.registry"/>
     </service>
     <service id="form.extension" class="Symfony\Component\Form\Extension\DependencyInjection\DependencyInjectionExtension">
-      <argument type="service" id=".service_locator.az5QyCT"/>
+      <argument type="service" id=".service_locator..ELxuT_"/>
       <argument type="collection">
         <argument key="Symfony\Component\Form\Extension\Core\Type\FormType" type="iterator">
           <argument type="service" id="form.type_extension.form.transformation_failure_handling"/>
@@ -5064,16 +5054,11 @@
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\ItemController" class="App\Controller\ItemController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\ItemController" class="App\Controller\ItemController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\ItemController" class="App\Controller\ItemController" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\ToDoListController" class="App\Controller\ToDoListController" autowire="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\ToDoListController" class="App\Controller\ToDoListController" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Controller\ToDoListController" class="App\Controller\ToDoListController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\UserController" class="App\Controller\UserController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\UserController" class="App\Controller\UserController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\UserController" class="App\Controller\UserController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\ItemType" class="App\Form\ItemType" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Form\ItemType" class="App\Form\ItemType" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\ToDoListType" class="App\Form\ToDoListType" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Form\ToDoListType" class="App\Form\ToDoListType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\UserType" class="App\Form\UserType" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Form\UserType" class="App\Form\UserType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\ItemRepository" class="App\Repository\ItemRepository" autowire="true" abstract="true"/>
@@ -5335,10 +5320,11 @@
         <argument key="loader" type="service" id=".errored..service_locator.KfbR3DY.Symfony\Component\Config\Loader\LoaderInterface"/>
       </argument>
     </service>
-    <service id=".service_locator.Rib71Kf" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".errored.gYkZQBm" class="App\Entity\ItemRepository"/>
+    <service id=".service_locator.klVCS6j" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
-        <argument key="itemRepository" type="service" id="App\Repository\ItemRepository"/>
+        <argument key="itemRepository" type="service" id=".errored.gYkZQBm"/>
       </argument>
     </service>
     <service id=".service_locator.83t1iHB" class="Symfony\Component\DependencyInjection\ServiceLocator">
@@ -5347,10 +5333,11 @@
         <argument key="item" type="service" id=".errored..service_locator.83t1iHB.App\Entity\Item"/>
       </argument>
     </service>
-    <service id=".service_locator.PM9fs6r" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".errored.vybDxpY" class="App\Entity\UserRepository"/>
+    <service id=".service_locator.1XliZaF" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
-        <argument key="toDoListRepository" type="service" id="App\Repository\ToDoListRepository"/>
+        <argument key="userRepository" type="service" id=".errored.vybDxpY"/>
       </argument>
     </service>
     <service id=".service_locator.ch4Jgvl" class="Symfony\Component\DependencyInjection\ServiceLocator">
@@ -5359,33 +5346,16 @@
         <argument key="user" type="service" id=".errored..service_locator.ch4Jgvl.App\Entity\User"/>
       </argument>
     </service>
-    <service id=".service_locator.aJ7VWpY" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="toDoList" type="service" id=".errored..service_locator.aJ7VWpY.App\Entity\ToDoList"/>
-      </argument>
-    </service>
-    <service id=".service_locator..Ae5NXw" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="userRepository" type="service" id="App\Repository\UserRepository"/>
-      </argument>
-    </service>
-    <service id=".service_locator.WWfx.dY" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.TSSUSwE" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Controller\ItemController::delete" type="service" id=".service_locator.83t1iHB"/>
         <argument key="App\Controller\ItemController::edit" type="service" id=".service_locator.83t1iHB"/>
-        <argument key="App\Controller\ItemController::index" type="service" id=".service_locator.Rib71Kf"/>
+        <argument key="App\Controller\ItemController::index" type="service" id=".service_locator.klVCS6j"/>
         <argument key="App\Controller\ItemController::show" type="service" id=".service_locator.83t1iHB"/>
-        <argument key="App\Controller\ToDoListController::delete" type="service" id=".service_locator.aJ7VWpY"/>
-        <argument key="App\Controller\ToDoListController::edit" type="service" id=".service_locator.aJ7VWpY"/>
-        <argument key="App\Controller\ToDoListController::index" type="service" id=".service_locator.PM9fs6r"/>
-        <argument key="App\Controller\ToDoListController::new" type="service" id=".service_locator.ch4Jgvl"/>
-        <argument key="App\Controller\ToDoListController::show" type="service" id=".service_locator.aJ7VWpY"/>
         <argument key="App\Controller\UserController::delete" type="service" id=".service_locator.ch4Jgvl"/>
         <argument key="App\Controller\UserController::edit" type="service" id=".service_locator.ch4Jgvl"/>
-        <argument key="App\Controller\UserController::index" type="service" id=".service_locator..Ae5NXw"/>
+        <argument key="App\Controller\UserController::index" type="service" id=".service_locator.1XliZaF"/>
         <argument key="App\Controller\UserController::show" type="service" id=".service_locator.ch4Jgvl"/>
         <argument key="App\Kernel::loadRoutes" type="service" id=".service_locator.KfbR3DY"/>
         <argument key="App\Kernel::registerContainerConfiguration" type="service" id=".service_locator.KfbR3DY"/>
@@ -5395,16 +5365,11 @@
         <argument key="kernel::terminate" type="service" id=".service_locator.KfwZsne"/>
         <argument key="App\Controller\ItemController:delete" type="service" id=".service_locator.83t1iHB"/>
         <argument key="App\Controller\ItemController:edit" type="service" id=".service_locator.83t1iHB"/>
-        <argument key="App\Controller\ItemController:index" type="service" id=".service_locator.Rib71Kf"/>
+        <argument key="App\Controller\ItemController:index" type="service" id=".service_locator.klVCS6j"/>
         <argument key="App\Controller\ItemController:show" type="service" id=".service_locator.83t1iHB"/>
-        <argument key="App\Controller\ToDoListController:delete" type="service" id=".service_locator.aJ7VWpY"/>
-        <argument key="App\Controller\ToDoListController:edit" type="service" id=".service_locator.aJ7VWpY"/>
-        <argument key="App\Controller\ToDoListController:index" type="service" id=".service_locator.PM9fs6r"/>
-        <argument key="App\Controller\ToDoListController:new" type="service" id=".service_locator.ch4Jgvl"/>
-        <argument key="App\Controller\ToDoListController:show" type="service" id=".service_locator.aJ7VWpY"/>
         <argument key="App\Controller\UserController:delete" type="service" id=".service_locator.ch4Jgvl"/>
         <argument key="App\Controller\UserController:edit" type="service" id=".service_locator.ch4Jgvl"/>
-        <argument key="App\Controller\UserController:index" type="service" id=".service_locator..Ae5NXw"/>
+        <argument key="App\Controller\UserController:index" type="service" id=".service_locator.1XliZaF"/>
         <argument key="App\Controller\UserController:show" type="service" id=".service_locator.ch4Jgvl"/>
         <argument key="kernel:loadRoutes" type="service" id=".service_locator.KfbR3DY"/>
         <argument key="kernel:registerContainerConfiguration" type="service" id=".service_locator.KfbR3DY"/>
@@ -5470,11 +5435,10 @@
       <argument type="service" id="debug.argument_resolver.not_tagged_controller.inner"/>
       <argument type="service" id="debug.stopwatch"/>
     </service>
-    <service id=".service_locator.az5QyCT" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator..ELxuT_" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Form\ItemType" type="service" id="App\Form\ItemType"/>
-        <argument key="App\Form\ToDoListType" type="service" id="App\Form\ToDoListType"/>
         <argument key="App\Form\UserType" type="service" id="App\Form\UserType"/>
         <argument key="Symfony\Bridge\Doctrine\Form\Type\EntityType" type="service" id="form.type.entity"/>
         <argument key="Symfony\Component\Form\Extension\Core\Type\ChoiceType" type="service" id="form.type.choice"/>
@@ -5709,12 +5673,6 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.5nX7ca3" method="withContext"/>
     </service>
-    <service id=".service_locator.5nX7ca3.App\Controller\ToDoListController" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\ToDoListController"/>
-      <argument>App\Controller\ToDoListController</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.5nX7ca3" method="withContext"/>
-    </service>
     <service id=".service_locator.5nX7ca3.App\Controller\UserController" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\UserController"/>
       <argument>App\Controller\UserController</argument>
@@ -5883,12 +5841,12 @@
       <argument type="service" id="security.token_storage"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
-      <argument type="service" id=".service_locator.WWfx.dY"/>
+      <argument type="service" id=".service_locator.TSSUSwE"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver"/>
     <service id="debug.argument_resolver.not_tagged_controller.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
-      <argument type="service" id=".service_locator.WWfx.dY"/>
+      <argument type="service" id=".service_locator.TSSUSwE"/>
     </service>
     <service id=".debug.http_client.inner" class="Symfony\Contracts\HttpClient\HttpClientInterface">
       <argument type="collection"/>
@@ -5902,7 +5860,6 @@
     <service id=".errored..service_locator.KfbR3DY.Symfony\Component\Config\Loader\LoaderInterface" class="Symfony\Component\Config\Loader\LoaderInterface"/>
     <service id=".errored..service_locator.83t1iHB.App\Entity\Item" class="App\Entity\Item"/>
     <service id=".errored..service_locator.ch4Jgvl.App\Entity\User" class="App\Entity\User"/>
-    <service id=".errored..service_locator.aJ7VWpY.App\Entity\ToDoList" class="App\Entity\ToDoList"/>
     <service id="console.command_loader" class="Symfony\Component\Console\CommandLoader\ContainerCommandLoader" public="true">
       <tag name="container.no_preload"/>
       <argument type="service" id=".service_locator.eXzwb0x"/>
@@ -6299,7 +6256,7 @@
     <service id="Psr\Log\LoggerInterface" alias="monolog.logger"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.Kbr2i2X" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.WWfx.dY"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.TSSUSwE"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="Psr\Log\LoggerInterface $requestLogger" alias="monolog.logger.request"/>
     <service id="Psr\Log\LoggerInterface $consoleLogger" alias="monolog.logger.console"/>

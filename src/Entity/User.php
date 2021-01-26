@@ -154,12 +154,12 @@ class User
     {
         // unset the owning side of the relation if necessary
         if ($toDoList === null && $this->toDoList !== null) {
-            $this->toDoList->setUserId(null);
+            $this->toDoList->setUser(null);
         }
 
         // set the owning side of the relation if necessary
-        if ($toDoList !== null && $toDoList->getUserId() !== $this) {
-            $toDoList->setUserId($this);
+        if ($toDoList !== null && $toDoList->getUser() !== $this) {
+            $toDoList->setUser($this);
         }
 
         $this->toDoList = $toDoList;

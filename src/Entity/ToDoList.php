@@ -112,7 +112,7 @@ class ToDoList
                 throw new Exception("Todolist cannot have more item");
             }
 
-            $lastItem = $this->getItems()->last();
+            $lastItem = $this->lastItem();
             $currentDate = new DateTime('now');
             if(($lastItem->getCreatedAt()->add(new DateInterval('P1800S'))) > $currentDate) {
                 throw new Exception("Last item too recent");
@@ -124,6 +124,10 @@ class ToDoList
         }
 
         return true;
+    }
+
+    public function lastItem() {
+        return $this->getItems()->last();
     }
 
     public function countItem() {
