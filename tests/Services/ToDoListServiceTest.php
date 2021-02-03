@@ -4,12 +4,12 @@ namespace tests\Services;
 
 use App\Entity\Item;
 use App\Entity\User;
-use App\Services\ToDoListService;
+use App\Services\TodolistService;
 use DateInterval;
 use DateTime;
 use PHPUnit\Framework\TestCase;
 
-class ToDoListServiceTest extends TestCase {
+class TodolistServiceTest extends TestCase {
 
     private User $user;
     private Item $item;
@@ -37,14 +37,17 @@ class ToDoListServiceTest extends TestCase {
     }
 
     public function testAddItemNominal() {
-        $todolistservice = $this->getMockBuilder(ToDoListService::class)->onlyMethods(['sendMail'])->getMock();
+        $this->createUser();
+        $this->createItem();
+        $todolistservice = $this->getMockBuilder(TodolistService::class)->onlyMethods(['sendMail'])->getMock();
         $todolistservice->expects($this->any())->method('sendMail')->willReturn("mail envoye");
 
         $this->assertTrue($todolistservice->addItem($this->user, $this->item->getName(), $this->item->getContent()));
     }
 
     public function testAddItemUserNull() {
-        $todolistservice = $this->getMockBuilder(ToDoListService::class)->onlyMethods(['sendMail'])->getMock();
+        $this->createItem();
+        $todolistservice = $this->getMockBuilder(TodolistService::class)->onlyMethods(['sendMail'])->getMock();
         $todolistservice->expects($this->any())->method('sendMail')->willReturn("mail envoye");
         $user = null;
 
@@ -52,27 +55,33 @@ class ToDoListServiceTest extends TestCase {
     }
 
     public function testAddItemUserNotValid() {
-        $todolistservice = $this->getMockBuilder(ToDoListService::class)->onlyMethods(['sendMail'])->getMock();
+        $this->createUser();
+        $this->createItem();
+        $todolistservice = $this->getMockBuilder(TodolistService::class)->onlyMethods(['sendMail'])->getMock();
         $todolistservice->expects($this->any())->method('sendMail')->willReturn("mail envoye");
         $this->user->setEmail('test');
         
         $this->assertFalse($todolistservice->addItem($this->user, $this->item->getName(), $this->item->getContent()));
     }
 
-    public function testAddItemTodolistNull() {
-        $todolistservice = $this->getMockBuilder(ToDoListService::class)->onlyMethods(['sendMail'])->getMock();
+    public function testAddItemtodolistNull() {
+        $this->createUser();
+        $this->createItem();
+        $todolistservice = $this->getMockBuilder(TodolistService::class)->onlyMethods(['sendMail'])->getMock();
         $todolistservice->expects($this->any())->method('sendMail')->willReturn("mail envoye");
-        $this->setTodolist = null;
+        $this->settodolist = null;
         
         $this->assertFalse($todolistservice->addItem($this->user, $this->item->getName(), $this->item->getContent()));
     }
 
     public function testAddItemSendEmail() {
-        $todolistservice = $this->getMockBuilder(ToDoListService::class)->onlyMethods(['sendMail', 'countItem'])->getMock();
+        $this->createUser();
+        $this->createItem();
+        $todolistservice = $this->getMockBuilder(TodolistService::class)->onlyMethods(['sendMail', 'countItem'])->getMock();
         $todolistservice->expects($this->any())->method('sendMail')->willReturn("mail envoye");
         $todolistservice->expects($this->any())->method('countItem')->willReturn(8);
         
-        $this->assertEquals("email envoye", $todolistservice->addItem($user, $this->item->getName(), $this->item->getContent()));
+        $this->assertEquals("email envoye", $todolistservice->addItem($this->user, $this->item->getName(), $this->item->getContent()));
     }
 
 }

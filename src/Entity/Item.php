@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
+use App\Repository\ItemRepository;
 
 /**
  * @ORM\Entity(repositoryClass=ItemRepository::class)
@@ -33,9 +34,9 @@ class Item
     private $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=ToDoList::class, inversedBy="items")
+     * @ORM\ManyToOne(targetEntity=Todolist::class, inversedBy="items")
      */
-    private $toDoList;
+    private $todolist;
 
     public function getId(): ?int
     {
@@ -78,14 +79,14 @@ class Item
         return $this;
     }
 
-    public function getToDoList(): ?ToDoList
+    public function getTodolist(): ?int
     {
-        return $this->toDoList;
+        return $this->todolist->getId();
     }
 
-    public function setToDoList(?ToDoList $toDoList): self
+    public function setTodolist(?Todolist $todolist): self
     {
-        $this->toDoList = $toDoList;
+        $this->todolist = $todolist;
 
         return $this;
     }
@@ -110,3 +111,4 @@ class Item
         return strlen($this->getContent());
     }
 }
+

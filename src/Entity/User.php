@@ -6,6 +6,7 @@ use DateInterval;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
+use App\Repository\UserRepository;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -46,7 +47,7 @@ class User
     private $birthday;
 
     /**
-     * @ORM\OneToOne(targetEntity=ToDoList::class, mappedBy="userId", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Todolist::class)
      */
     private $toDoList;
 
@@ -145,23 +146,13 @@ class User
         return true;
     }
 
-    public function getToDoList(): ?ToDoList
+    public function getToDoList(): ?Todolist
     {
         return $this->toDoList;
     }
 
-    public function setToDoList(?ToDoList $toDoList): self
+    public function setToDoList(?Todolist $toDoList): self
     {
-        // unset the owning side of the relation if necessary
-        if ($toDoList === null && $this->toDoList !== null) {
-            $this->toDoList->setUser(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($toDoList !== null && $toDoList->getUser() !== $this) {
-            $toDoList->setUser($this);
-        }
-
         $this->toDoList = $toDoList;
 
         return $this;
